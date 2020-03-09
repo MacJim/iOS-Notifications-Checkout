@@ -1,0 +1,9 @@
+# Ignores all .DS_Store files in the project directory.
+*.DS_Store
+
+# Ignores assets.
+Assets.xcassets
+
+# Strip personal data in the workspace.
+xcuserdata
+*.xcworkspace
