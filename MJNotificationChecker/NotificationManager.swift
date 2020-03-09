@@ -89,22 +89,23 @@ class NotificationManager: NSObject, UNUserNotificationCenterDelegate {
     
     // MARK: Register notifications (convenience)
     /// Sends a notification after a specific time interval.
-    func sendNotificationAfterTimeInterval(title: String, body: String, timeInterval: TimeInterval) {
+    func sendNotificationAfterTimeInterval(title: String, body: String, identifier: String, timeInterval: TimeInterval) {
         let trigger = createTimeIntervalTrigger(repeats: false, timeInterval: timeInterval)
         registerNotificationWithTrigger(title: title, body: body, identifier: "Test", trigger: trigger)
     }
     
     func registerRecurringNotificationsOnDates(title: String, body: String, identifier: String, weekDay: Int?, hour: Int?, minute: Int?, second: Int?) {
-        
+        let trigger = createCalendarRecurringTrigger(repeats: true, weekDay: weekDay, hour: hour, minute: minute, second: second)
+        registerNotificationWithTrigger(title: title, body: body, identifier: identifier, trigger: trigger)
     }
     
     
     // MARK: - Unregister notifications
     // Source: https://developer.apple.com/documentation/usernotifications/unusernotificationcenter/1649517-removependingnotificationrequest
-    func unregisterNotification() {
+    func unregisterNotification(identifier: String) {
         let center = UNUserNotificationCenter.current()
-        // For some reasons the following lines doesn't work.
-//        center.removePendingNotificationRequests(withIdentifiers: ["Test"])
+        
+        center.removePendingNotificationRequests(withIdentifiers: [identifier])
 //        center.removeAllPendingNotificationRequests()
     }
     

@@ -16,8 +16,13 @@ class ViewController: UIViewController {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         let notificationManager = NotificationManager.shared
-        notificationManager.sendNotificationAfterTimeInterval(title: "Test", body: "Body", timeInterval: 2)
-        notificationManager.unregisterNotification()
+        notificationManager.sendNotificationAfterTimeInterval(title: "Test", body: "Body", identifier: "Test", timeInterval: 2)
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+//            [weak self] in
+            [notificationManager] in
+            notificationManager.unregisterNotification(identifier: "Test")
+        }
     }
 }
 
